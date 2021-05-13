@@ -4,10 +4,11 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 
-function AddCar(props) {
+function EditCar(props) {
   const [open, setOpen] = React.useState(false);
   const [car, setCar] = React.useState({
     brand: '',
@@ -19,6 +20,14 @@ function AddCar(props) {
   });
 
   const handleClickOpen = () => {
+    setCar({
+      brand: props.car.brand,
+      model: props.car.model,
+      color: props.car.color,
+      fuel: props.car.fuel,
+      year: props.car.year,
+      price: props.car.price
+    });
     setOpen(true);
   };
 
@@ -27,7 +36,7 @@ function AddCar(props) {
   };
 
   const handleSave = () => {
-    props.addCar(car);
+    props.updateCar(props.link, car);
     setOpen(false);
   }
 
@@ -37,11 +46,11 @@ function AddCar(props) {
 
   return (
     <div>
-      <Button style={{ marginTop: 10 }} variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add Car
-      </Button>
+      <IconButton color="primary" onClick={handleClickOpen}>
+        <EditIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">New Car</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit Car</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
@@ -91,7 +100,6 @@ function AddCar(props) {
             onChange={inputChanged}
             fullWidth
           />
-
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -106,4 +114,4 @@ function AddCar(props) {
   );
 }
 
-export default AddCar;
+export default EditCar;
